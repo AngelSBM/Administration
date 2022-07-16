@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Administration.DataAccessLayer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,10 @@ namespace Auth.DataAccessLayer.Entities
         public byte[]? Salt { get; set; }
         public string Password { get; set; }
         public Guid PublicId { get; set; }
+
+        #region relationships
+        public ICollection<Client> Clients { get; set; }
+        #endregion
 
     }
 }

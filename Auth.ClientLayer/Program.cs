@@ -15,6 +15,9 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using FluentValidation.AspNetCore;
 using System.Text.Json.Serialization;
+using Administration.DataAccessLayer.Entities;
+using Administration.LogicLayer.Abstractions;
+using Administration.LogicLayer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,10 +36,13 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
 //REPOS
 builder.Services.AddScoped<IRepository<Company>, Repository<Company>>();
+builder.Services.AddScoped<IRepository<Client>, Repository<Client>>();
+builder.Services.AddScoped<IRepository<Address>, Repository<Address>>();
 builder.Services.AddScoped<IRepository<Session>, Repository<Session>>();
 
 //SERVICES
 builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 //UNITS
