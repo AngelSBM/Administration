@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Administration.LogicLayer.DTOs
 {
-    public class AddressDTO
+    public class NewAddressDTO
     {
-        public int Id { get; set; }
         public string Address { get; set; }
     }
 }

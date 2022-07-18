@@ -12,7 +12,7 @@ namespace Auth.LogicLayer.Abstractions
     {
         public CompanyDTO RegisterCompany(CompanyRegisterDTO newCompany);
         public CompanyCrendentialsDTO Login(CompanyLoginDTO company);
-        public CompanyCrendentialsDTO RefreshSession();
+        public CompanyCrendentialsDTO RefreshSession(string refreshToken);
         public bool Logout();
     }
 }

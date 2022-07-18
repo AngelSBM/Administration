@@ -53,14 +53,15 @@ namespace Auth.ClientLayer.Controllers
             {
                 CompanyCrendentialsDTO tokens = _authService.Login(companyUser);
 
-                var cookieOptions = new CookieOptions { HttpOnly = true };
-                Response.Cookies.Append("refreshToken", tokens.RefreshToken, cookieOptions);
+                //var cookieOptions = new CookieOptions { HttpOnly = true };
+                //Response.Cookies.Append("refreshToken", tokens.RefreshToken, cookieOptions);
 
 
                 return ApiResponse.OK(new
                 {
                     Message = "You are logged!",
-                    AccessToken = tokens.AccessToken
+                    AccessToken = tokens.AccessToken,
+                    RefreshToken = tokens.RefreshToken
                 });
             }
             catch (BadRequestException e)
@@ -80,21 +81,22 @@ namespace Auth.ClientLayer.Controllers
             }
         }
 
-        [HttpPost("refreshToken")]        
-        public IActionResult RefreshToken()
+        [HttpGet("refreshToken")]        
+        public IActionResult RefreshToken(string refreshToken)
         {
 
             try
             {
-                CompanyCrendentialsDTO newTokens = _authService.RefreshSession();
+                CompanyCrendentialsDTO newTokens = _authService.RefreshSession(refreshToken);
 
-                var cookieOptions = new CookieOptions { HttpOnly = true };
-                Response.Cookies.Append("refreshToken", newTokens.RefreshToken, cookieOptions);
+                //var cookieOptions = new CookieOptions { HttpOnly = true };
+                //Response.Cookies.Append("refreshToken", newTokens.RefreshToken, cookieOptions);
 
                 return ApiResponse.OK(new
                 {
                     Message = "Token refreshed",
-                    AccessToken = newTokens.AccessToken
+                    AccessToken = newTokens.AccessToken,
+                    RefreshToken = newTokens.RefreshToken
                 }); 
             }
             catch (NotAuthorizedException e)

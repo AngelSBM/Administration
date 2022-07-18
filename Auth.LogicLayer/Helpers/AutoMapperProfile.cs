@@ -17,10 +17,29 @@ namespace Auth.LogicLayer.Helpers
         {
             CreateMap<Company, CompanyDTO>().ReverseMap();
 
-            CreateMap<Client, ClientDTO>().ReverseMap();
+            CreateMap<Client, NewClientDTO>().ReverseMap();
+            CreateMap<Client, ClientDTO>()
+                .ForMember(x => x.Addresses, options => options.MapFrom(MapClientAddress));
 
             //CreateMap<Company, UserDetailDTO>()
             //    .ForMember(x => x.Roles, options => options.MapFrom(MapUserRole)).ReverseMap();
+        }
+
+        private List<AddressDTO> MapClientAddress(Client client, ClientDTO clientDTO)
+        {
+            var addresses = new List<AddressDTO>();
+            if(client.Addresses == null) { return addresses; }
+            foreach(var address in client.Addresses)
+            {
+                addresses.Add(new AddressDTO
+                {
+                    Id = address.Id,
+                    Address = address.AddressName
+                });
+            }
+
+            return addresses;
+
         }
 
         //private List<RoleDTO> MapUserRole(Company user, UserDetailDTO userDetailDTO)

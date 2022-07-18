@@ -109,9 +109,9 @@ namespace Auth.LogicLayer.Services
         }
 
 
-        public CompanyCrendentialsDTO RefreshSession()
+        public CompanyCrendentialsDTO RefreshSession(string refreshToken)
         {
-            var refreshToken = _httpContextAccessor.HttpContext.Request.Cookies["refreshToken"];
+            //var refreshToken = _httpContextAccessor.HttpContext.Request.Cookies["refreshToken"];
 
             var session = _unitOfWork.sessionRepo.Find(session => session.Token.ToString() == refreshToken);
 
@@ -178,7 +178,7 @@ namespace Auth.LogicLayer.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim("UID", user.Id.ToString())
+                new Claim("ID", user.Id.ToString())
             };
 
             string secretKey = _configuration.GetSection("AppSettings:Token").Value;
@@ -191,7 +191,7 @@ namespace Auth.LogicLayer.Services
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddSeconds(30),
                 signingCredentials: creds);
 
             string jwt = new JwtSecurityTokenHandler().WriteToken(token);

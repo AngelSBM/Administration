@@ -1,4 +1,5 @@
-﻿using Administration.DataAccessLayer.Entities;
+﻿using Administration.DataAccessLayer.Abstractions.Repos;
+using Administration.DataAccessLayer.Entities;
 using Auth.DataAccessLayer.Abstractions;
 using Auth.DataAccessLayer.Abstractions.Repos;
 using Auth.DataAccessLayer.Entities;
@@ -19,7 +20,7 @@ namespace Auth.DataAccessLayer
             ApplicationContext context,
             IRepository<Session> sessionRepository,
             IRepository<Company> companyRepository,
-            IRepository<Client> clientRepository,
+            IClientRepository clientRepository,
             IRepository<Address> addressRepository)
         {
             this._globalContext = context;
@@ -33,7 +34,7 @@ namespace Auth.DataAccessLayer
 
         public IRepository<Session> sessionRepo { get; set; }
         public IRepository<Company> companyRepo { get; set; }
-        public IRepository<Client> clientRepo { get; set; }
+        public IClientRepository clientRepo { get; set; }
         public IRepository<Address> addressRepo { get; set; }
 
 

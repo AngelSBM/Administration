@@ -1,4 +1,5 @@
-﻿using Administration.DataAccessLayer.Entities;
+﻿using Administration.DataAccessLayer.Abstractions.Repos;
+using Administration.DataAccessLayer.Entities;
 using Auth.DataAccessLayer.Abstractions.Repos;
 using Auth.DataAccessLayer.Entities;
 using System;
@@ -13,7 +14,7 @@ namespace Auth.DataAccessLayer.Abstractions
     {
         public IRepository<Session> sessionRepo { get; }
         public IRepository<Company> companyRepo { get; }
-        public IRepository<Client> clientRepo { get; }
+        public IClientRepository clientRepo { get; }
         public IRepository<Address> addressRepo { get; }
 
 

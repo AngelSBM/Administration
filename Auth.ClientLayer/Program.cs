@@ -18,6 +18,8 @@ using System.Text.Json.Serialization;
 using Administration.DataAccessLayer.Entities;
 using Administration.LogicLayer.Abstractions;
 using Administration.LogicLayer.Services;
+using Administration.DataAccessLayer.Repositories;
+using Administration.DataAccessLayer.Abstractions.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +38,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
 //REPOS
 builder.Services.AddScoped<IRepository<Company>, Repository<Company>>();
-builder.Services.AddScoped<IRepository<Client>, Repository<Client>>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IRepository<Address>, Repository<Address>>();
 builder.Services.AddScoped<IRepository<Session>, Repository<Session>>();
 
@@ -66,6 +68,20 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:8080")
+                               .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowCredentials(); 
+                      });
+});
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -93,6 +109,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
