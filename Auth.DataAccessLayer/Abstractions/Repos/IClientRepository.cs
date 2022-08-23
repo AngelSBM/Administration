@@ -10,6 +10,6 @@ namespace Administration.DataAccessLayer.Abstractions.Repos
 {
     public interface IClientRepository : IRepository<Client>
     {
-        public IEnumerable<Client> GetClientsDetails(int companyId);
+        public IEnumerable<Client> GetClientsDetails();
     }
 }

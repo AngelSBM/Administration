@@ -20,10 +20,9 @@ namespace Administration.DataAccessLayer.Repositories
             this._context = context;
         }
 
-        public IEnumerable<Client> GetClientsDetails(int companyId)
+        public IEnumerable<Client> GetClientsDetails()
         {
-           return _context.Set<Client>()
-                .Where(client => client.CompanyId == companyId)
+           return _context.Set<Client>()               
                 .Include(c => c.Addresses);
         }
     }

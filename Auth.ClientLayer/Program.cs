@@ -1,11 +1,11 @@
 using Auth.DataAccessLayer;
 using Auth.DataAccessLayer.Abstractions;
 using Auth.DataAccessLayer.Abstractions.Repos;
-using Auth.DataAccessLayer.Entities;
+
 using Auth.DataAccessLayer.Repositories;
-using Auth.LogicLayer.Abstractions;
+
 using Auth.LogicLayer.Helpers;
-using Auth.LogicLayer.Services;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -32,20 +32,15 @@ builder.Services.AddControllers()
     });
 
 
-
-builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("LocalServer")));
+var connectionString = builder.Configuration.GetConnectionString("LocalServer");
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
 //REPOS
-builder.Services.AddScoped<IRepository<Company>, Repository<Company>>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IRepository<Address>, Repository<Address>>();
-builder.Services.AddScoped<IRepository<Session>, Repository<Session>>();
-
 //SERVICES
-builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
 
 //UNITS
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

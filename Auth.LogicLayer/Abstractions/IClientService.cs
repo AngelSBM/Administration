@@ -9,7 +9,7 @@ namespace Administration.LogicLayer.Abstractions
 {
     public interface IClientService
     {
-        public IEnumerable<ClientDTO> GetClients(int copmanyId);
+        public IEnumerable<ClientDTO> GetClients();
         public ClientDTO CreateClient(NewClientDTO client);
         public ClientDTO UpdateClient(ClientUpdateDTO updatedClient);
         public bool DeleteClient(int id);

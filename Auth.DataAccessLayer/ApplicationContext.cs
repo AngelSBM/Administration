@@ -1,5 +1,5 @@
 ﻿using Administration.DataAccessLayer.Entities;
-using Auth.DataAccessLayer.Entities;
+
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,25 +15,14 @@ namespace Auth.DataAccessLayer
         {
         }
 
-        public DbSet<Company> Company { get; set; }
+        DbSet<Client> Clients { get; set; }
+        DbSet<Address> ClientsAdresses { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Company>( entity =>
-            {
-                entity.ToTable("COMPANIES");
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).HasColumnName("ID");
-                entity.Property(e => e.Name).HasColumnName("COMPANY_NAME");
-                entity.Property(e => e.Email).HasColumnName("EMAIL");
-                entity.Property(e => e.Password).HasColumnName("COMPANY_PASSWORD");
-                entity.Property(e => e.PublicId).HasColumnName("PUBLIC_ID");
-                entity.Property(e => e.Salt).HasColumnName("SALT");
-
-                entity.HasMany(e => e.Clients).WithOne(e => e.Company);
-            } );
 
             modelBuilder.Entity<Client>(entity =>
             {
@@ -44,9 +33,8 @@ namespace Auth.DataAccessLayer
                 entity.Property(e => e.Email).HasColumnName("EMAIL");
                 entity.Property(e => e.Phone).HasColumnName("PHONE_NUMBER");
                 entity.Property(e => e.PublicId).HasColumnName("PUBLIC_ID");
-                entity.Property(e => e.CompanyId).HasColumnName("COMPANY_ID");
 
-                entity.HasOne(e => e.Company).WithMany(e => e.Clients).IsRequired();
+
                 entity.HasMany(e => e.Addresses).WithOne(e => e.Client);
             });
 
@@ -61,16 +49,7 @@ namespace Auth.DataAccessLayer
                 entity.HasOne(e => e.Client).WithMany(e => e.Addresses).IsRequired().IsRequired();
             });
 
-            modelBuilder.Entity<Session>(entity =>
-           {
-               entity.ToTable("COMPANIES_SESSIONS");
-               entity.HasKey(e => e.Id);
-               entity.Property(e => e.Id).HasColumnName("ID");
-               entity.Property(e => e.Token).HasColumnName("REFRESH_TOKEN");
-               entity.Property(e => e.CreatedAt).HasColumnName("CREATED_AT");
-               entity.Property(e => e.ExpiresAt).HasColumnName("EXPIRES_AT");
-               entity.Property(e => e.CompanyId).HasColumnName("COMPANY_ID  ");
-           } );
+
 
 
 

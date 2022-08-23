@@ -26,9 +26,9 @@ namespace Administration.LogicLayer.Services
         }
 
 
-        public IEnumerable<ClientDTO> GetClients(int companyId)
+        public IEnumerable<ClientDTO> GetClients()
         {
-            var clients = _unitOfWork.clientRepo.GetClientsDetails(companyId);
+            var clients = _unitOfWork.clientRepo.GetClientsDetails();
 
             List<ClientDTO> clientsResponse = new List<ClientDTO>();
             foreach (var client in clients)
@@ -47,7 +47,6 @@ namespace Administration.LogicLayer.Services
             clientDB.Name = newClient.Name;
             clientDB.Email = newClient.Email;
             clientDB.Phone = newClient.Phone;
-            clientDB.CompanyId = newClient.CompanyId;
 
             try
             {

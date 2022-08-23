@@ -20,13 +20,11 @@ namespace Administration.ClientLayer.Controllers
         }
 
         [HttpPost("GetAll")]
-        [Authorize]
         public IActionResult NewClient()
         {
             try
             {
-                var companyId = int.Parse(User.FindFirst("ID").Value);
-                var resp = _clientService.GetClients(companyId);
+                var resp = _clientService.GetClients();
 
                 return ApiResponse.OK(resp);
             }
@@ -39,13 +37,10 @@ namespace Administration.ClientLayer.Controllers
 
 
         [HttpPost("New")]
-        [Authorize]
         public IActionResult NewClient(NewClientDTO newClient)
         {
             try
             {
-                var companyId = int.Parse(User.FindFirst("ID").Value);
-                newClient.CompanyId = companyId;
 
                 var resp = _clientService.CreateClient(newClient);
 
@@ -60,7 +55,6 @@ namespace Administration.ClientLayer.Controllers
         }
 
         [HttpDelete("Delete")]
-        [Authorize]
         public IActionResult DeleteClient(int id)
         {
             try
@@ -77,7 +71,6 @@ namespace Administration.ClientLayer.Controllers
         }
 
         [HttpPut("Update")]
-        [Authorize]
         public IActionResult UpdateClient(ClientUpdateDTO updatedClient)
         {
             try
@@ -98,7 +91,6 @@ namespace Administration.ClientLayer.Controllers
         }
 
         [HttpDelete("DeleteAddress")]
-        [Authorize]
         public IActionResult DeleteAddress(int addressId)
         {
             try

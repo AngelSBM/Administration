@@ -1,6 +1,5 @@
 ﻿using Administration.DataAccessLayer.Entities;
 using Administration.LogicLayer.DTOs;
-using Auth.DataAccessLayer.Entities;
 using Auth.LogicLayer.DTOs;
 using AutoMapper;
 using System;
@@ -15,7 +14,6 @@ namespace Auth.LogicLayer.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<Company, CompanyDTO>().ReverseMap();
 
             CreateMap<Client, NewClientDTO>().ReverseMap();
             CreateMap<Client, ClientDTO>()
